@@ -19,19 +19,21 @@ function heartbeat() {
 }
 
 wss.on('connection', function connection(ws, req) {
+    const ip = req.connection.remoteAddress;
     const location = url.parse(req.url, true);
+    console.log("ip = " + ip);
     console.log("location = " + location.path);
     // You might use location.query.access_token to authenticate or share sessions
     // or req.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
 
     ws.on('message', function incoming(message) {
         console.log('received: %s', message);
-        ws.send("echo: " + message);
+        // ws.send("echo: " + message);
     });
 
     ws.isAlive = true;
     ws.on('pong', heartbeat);
-
+    ws.on('close', () => console.log('Client disconnected'));
     ws.send('something');
 });
 
