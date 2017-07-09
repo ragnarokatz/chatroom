@@ -19,7 +19,14 @@ function sendToConnectionId(connectionID, data) {
     }
 }
 
-module.exports.ProcessMessage = function (message, connection) {
+// send the target connection message
+module.exports.SendClientMessage = function (connection, type, data) {
+    var json = JSON.stringify(data);
+    var str = type.toString() + ":" + json;
+    connection.send(str);
+}
+
+module.exports.ProcessClientMessage = function (message, connection) {
     if (message.length <= 4) {
         console.log("Invalid message: " + message + ", too short");
         return;
