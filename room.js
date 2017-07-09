@@ -4,6 +4,10 @@ var people = {};
 var roomIDCounter = 0;
 
 module.exports.CreateRoom = function (room) {
+    return new Promise((resolve, reject) => {
+        resolve(roomID);
+
+    });
     roomIDCounter++;
     room.id = roomIDCounter;
     room["people"] = [];
@@ -32,9 +36,8 @@ module.exports.LeaveRoom = function (connection) {
     } else {
         console.log("Removing " + connection.id + "from room " + roomID);
         array.splice(index, 1);
+        delete people[connection.id];
         return true;
     }
-
-    delete people[connection.id];
 }
 

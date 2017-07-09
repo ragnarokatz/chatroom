@@ -15,3 +15,7 @@ module.exports.RemoveConnection = function (connection) {
     console.log("Removing connection " + connection.id);
     delete connections[connection.id];
 }
+
+module.exports.GetConnection = function (connectionID) {
+    if (connectionID in connections)
+}

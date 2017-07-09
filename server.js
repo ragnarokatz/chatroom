@@ -55,8 +55,8 @@ wsServer.on('request', function (request) {
 
     // on connection message
     connection.on('message', function (message) {
-        console.log("Received message from " + connection.id + ": " + message);
-        Messages.processMessage(message, connection);
+        console.log("Received message from " + connection.id + ", message = " + message);
+        Messages.ProcessMessage(message, connection);
     });
 
     // on connection test ping
@@ -64,7 +64,7 @@ wsServer.on('request', function (request) {
     connection.on('pong', heartbeat);
 
     // message client that connection is successful
-    connection.send("1:1");
+    connection.send("100:1");
 });
 
 // start the server
