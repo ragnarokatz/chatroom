@@ -1,49 +1,81 @@
+const Connections = require("./connection.js");
+const Messages = require("./message.js");
+const Rooms = require("./room.js");
+
 const express = require('express');
 const http = require('http');
 const url = require('url');
 const WebSocket = require('ws');
-const PORT = process.env.PORT || 3000;
+
 const app = express();
+const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const wsServer = new WebSocket.Server({ server });
 
 app.use(function (req, res) {
-    console.log("Route visited on webpage")
-    res.send({ msg: "hello" });
+    console.log("Homepage visited via browser");
+    res.send("Homepage");
 });
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+// check to see if this origin is allowed
+function isOriginAllowed(origin) {
+    // put logic here to detect whether the specified origin is allowed.
+    return true;
+}
 
+// heartbeat callback response
 function heartbeat() {
-    console.log("Heartbeat detected")
+    console.log("Heartbeat callback response");
     this.isAlive = true;
 }
 
-wss.on('connection', function connection(ws, req) {
-    const ip = req.connection.remoteAddress;
-    const location = url.parse(req.url, true);
-    console.log("ip = " + ip);
-    console.log("location = " + location.path);
-    // You might use location.query.access_token to authenticate or share sessions
-    // or req.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
+// on request connection
+wsServer.on('request', function (request) {
+    if (!isOriginAllowed(request.origin)) {
+        // reject connection
+        request.reject();
+        console.log((new Date()) + ': Connection from origin ' + request.origin + ' rejected');
+        return;
+    }
 
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-        // ws.send("echo: " + message);
+    // allow connection
+    var connection = request.accept(null, request.origin);
+
+    // add to connection map
+    Connections.AddConnection(connection);
+    console.log((new Date()) + ': Connection ID ' + connection.id + ' accepted from origin ' + request.origin);
+
+    // on connection close
+    connection.on('close', function (reasonCode, description) {
+        console.log((new Date()) + ': Connection ' + connection.remoteAddress +
+            ' disconnected. Connection ID: ' + connection.id);
+        Rooms.LeaveRoom(connection);
+        Connections.RemoveConnection(connection);
     });
 
-    ws.isAlive = true;
-    ws.on('pong', heartbeat);
-    ws.on('close', () => console.log('Client disconnected'));
-    ws.send('something');
+    // on connection message
+    connection.on('message', function (message) {
+        console.log("Received message from " + connection.id + ": " + message);
+        Messages.processMessage(message, connection);
+    });
+
+    // on connection test ping
+    connection.isAlive = true;
+    connection.on('pong', heartbeat);
+
+    // message client that connection is successful
+    connection.send("1:1");
 });
 
-server.listen(PORT, function listening() {
-    console.log('Server started, listening on %d', server.address().port);
+// start the server
+server.listen(PORT, function () {
+    console.log("Server started, listening on " + server.address().port);
 });
 
-const interval = setInterval(function ping() {
+// check for dead connections
+const interval = setInterval(function () {
     console.log("Check for heartbeat");
-    wss.clients.forEach(function each(ws) {
+    wsServer.clients.forEach(function (ws) {
         if (ws.isAlive === false) {
             console.log("Socket no longer alive, terminating");
             return ws.terminate();
