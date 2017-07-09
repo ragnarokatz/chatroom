@@ -41,3 +41,9 @@ module.exports.LeaveRoom = function (connection) {
     }
 }
 
+function validateRoom(room) {
+    if (room.hasOwnProperty("name"))
+    {
+        
+    }
+}

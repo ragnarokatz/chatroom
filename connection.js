@@ -17,5 +17,9 @@ module.exports.RemoveConnection = function (connection) {
 }
 
 module.exports.GetConnection = function (connectionID) {
-    if (connectionID in connections)
+    if (!connections.hasOwnProperty(connectionID)) {
+        console.log("Failed to get connection")
+    } else {
+        return
+    }
 }

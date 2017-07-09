@@ -51,7 +51,7 @@ module.exports.ProcessMessage = function (message, connection) {
         case "300:":
             // send message
             console.log("Connection " + connection.id + "sends message " + obj.message);
-            
+
         default:
             console.log("Process message error, impossible here.");
             break;
