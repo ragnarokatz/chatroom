@@ -18,6 +18,7 @@ module.exports.CreateRoom = function (room) {
 
     var roomID = roomIDCounter.toString();
     room["id"] = roomID;
+    room["m_date"] = new Date().toString();
     room["people"] = {}; // initiate people object for storing connection ids
 
     console.log("Creating room with id " + roomID);
@@ -47,7 +48,7 @@ module.exports.DeleteRoom = function (roomID) {
 }
 
 // a connection joins a room
-module.exports.JoinRoom = function (connection, roomID) {
+module.exports.JoinRoom = function (connection, roomID, pw) {
     var connID = connection["id"];
     if (!rooms.hasOwnProperty(roomID)) {
         // room with specified id is not found
@@ -59,14 +60,22 @@ module.exports.JoinRoom = function (connection, roomID) {
     var people = room["people"];
     if (people.length >= room["max_p"]) {
         // already exceeded maximum amount of people allowed in the room
-        console.log("Connection " + connID + " failed to join room " + roomID + ", already reached maximum limit");
+        console.log("Connection " + connID + " failed to join room " + roomID +
+            ", room limit = " + room["max_p"] + ", people count = " + people.length);
+        return false;
+    }
+
+    if (room["type"] == 2 && pw !== room["pw"]) {
+        // check password for private rooms
+        console.log("Connection " + connID + " failed to join room " + roomID +
+            ", correct password = " + room["pw"] + ", received password = " + pw);
         return false;
     }
 
     // the connection joins the room
     // set connection id as key and time as value
     connection["room_id"] = roomID;
-    people[connID] = (new Date()).toString();
+    people[connID] = new Date().toString();
     return true;
 }
 
@@ -105,6 +114,7 @@ module.exports.LeaveRoom = function (connection) {
 
 // is the room specs valid
 function isRoomValid(room) {
+    // check if property is missing
     if (!room.hasOwnProperty("name")) {
         console.log("Invalid room, does not contain property name");
         return false;
@@ -120,17 +130,20 @@ function isRoomValid(room) {
         return false;
     }
 
+    // check room type
     var type = room["type"];
     if (type !== 1 && type !== 2) {
         console.log("Invalid room, type must be 1 or 2, got " + type);
         return false;
     }
 
+    // check if private room has password set
     if (type === 2 && !room.hasOwnProperty("pw")) {
         console.log("Invalid room, private room must contain property password");
         return false;
     }
 
+    // check property name
     var config = Config.GetConfig();
     var name = room["name"];
     var minSize = config["rname_size_min"];
@@ -148,6 +161,7 @@ function isRoomValid(room) {
         return false;
     }
 
+    // check max people property
     var maxPeople = room["max_p"];
     var arr = config["max_p"];
     if (!Util.IsInArray(maxPeople, arr)) {
@@ -159,6 +173,7 @@ function isRoomValid(room) {
         // check complete for public rooms
         return true;
 
+    // check password
     var password = room["pw"];
     minSize = config["pw_size_min"];
     maxSize = config["pw_size_max"];
@@ -189,6 +204,7 @@ function isRoomValid(room) {
         "type": 1,
         "max_p": 5,
         "people": {},
+        "date": "2010-9-12"
     },
     "5": {
         "name": "omgholy",
@@ -199,8 +215,9 @@ function isRoomValid(room) {
             "12" : "1979-6-12",
             "232" : "1980-7-14",
             "8498" : "2010-9-12",
-            "783" : "2008-6-24",
-        }
+            "783" : "2008-6-24"
+        },
+        "date": "2008-6-14"
     },
     "6": {
         "name": "secret",
@@ -209,8 +226,9 @@ function isRoomValid(room) {
         "max_p: 2",
         "people": {
             "13" : "2011-1-4",
-            "250" : "2005-4-16",
-        }
+            "250" : "2005-4-16"
+        },
+        "date": "1998-9-15"
     }, ...
 }
 */
