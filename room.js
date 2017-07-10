@@ -116,14 +116,65 @@ function isRoomValid(room) {
     }
 
     if (!room.hasOwnProperty("max_p")) {
-        console.log("Invalid room, does not contain property max_p");
+        console.log("Invalid room, does not contain property maximum number of people");
         return false;
     }
 
-    var name = room["name"];
-    Util.IsStringValidSize();
-    var regExp = /^[A-Za-z0-9]+$/;
+    var type = room["type"];
+    if (type !== 1 && type !== 2) {
+        console.log("Invalid room, type must be 1 or 2, got " + type);
+        return false;
+    }
 
+    if (type === 2 && !room.hasOwnProperty("pw")) {
+        console.log("Invalid room, private room must contain property password");
+        return false;
+    }
+
+    var config = Config.GetConfig();
+    var name = room["name"];
+    var minSize = config["rname_size_min"];
+    var maxSize = config["rname_size_max"];
+
+    if (!Util.IsStringValidSize(name, minSize, maxSize)) {
+        console.log("Invalid room, name size does not fit between " + minSize +
+            " and " + maxSize + ", got " + name.length);
+        return false;
+    }
+
+    var regExp = /^[A-Za-z0-9]+$/;
+    if (!Util.IsStringValidExp(name, regExp)) {
+        console.log("Invalid room, name must be alphanumeric, got " + name);
+        return false;
+    }
+
+    var maxPeople = room["max_p"];
+    var arr = config["max_p"];
+    if (!Util.IsInArray(maxPeople, arr)) {
+        console.log("Invalid room, failed to find maximum people in allowed list, got " + maxPeople);
+        return false;
+    }
+
+    if (!room.hasOwnProperty("pw"))
+        // check complete for public rooms
+        return true;
+
+    var password = room["pw"];
+    minSize = config["pw_size_min"];
+    maxSize = config["pw_size_max"];
+    if (!Util.IsStringValidSize(password, minSize, maxSize)) {
+        console.log("Invalid room, password size does not fit between " + minSize +
+            " and " + maxSize + ", got " + password.length);
+        return false;
+    }
+
+    if (!Util.IsStringValidExp(password, regExp)) {
+        console.log("Invalid room, password must be alphanumeric, got " + password);
+        return false;
+    }
+
+    // check complete for private rooms
+    return true;
 }
 
 // inactive messenger cleanup service
