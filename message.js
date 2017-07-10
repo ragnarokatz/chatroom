@@ -112,7 +112,7 @@ module.exports.ProcessClientMessage = function (message, connection) {
             // send message to client
             console.log("Connection " + connection["id"] + " sends message " + obj["msg"]);
             if (!connection.hasOwnProperty["room_id"]) {
-                SendClientMessage(connection, 400, { "err": 2300 });
+                SendClientMessage(connection, 400, { "err": 2400 });
             } else {
                 SendClientMessage(connection, 130, { "ret": 1 })
 
