@@ -8,6 +8,9 @@ var rooms = {};
 
 // create a room
 module.exports.CreateRoom = function (room) {
+    return new Promise((resolve, reject) => {
+
+    });
     if (!isRoomValid(room)) {
         // room specs are not valid
         console.log("Failed to create room, room specs are invalid");
@@ -27,34 +30,13 @@ module.exports.CreateRoom = function (room) {
     return roomID;
 }
 
-// delete a room
-module.exports.DeleteRoom = function (roomID) {
-    if (!rooms.hasOwnProperty(roomID)) {
-        // room listing does not contain room id
-        console.log("Failed to delete room " + roomID + ", room does not exist");
-        return false;
-    }
-
-    var room = rooms[roomID];
-    if (!Util.IsEmptyObject(room["people"])) {
-        // room is not empty yet
-        console.log("Cannot delete room " + roomID + ", room contains users");
-        return false;
-    }
-
-    // delete room from listing
-    console.log("Deleting room " + roomID + " from listing");
-    delete rooms[roomID];
-    return true;
-}
-
 // a connection joins a room
 module.exports.JoinRoom = function (connection, roomID, pw) {
     var connID = connection["id"];
     if (!rooms.hasOwnProperty(roomID)) {
         // room with specified id is not found
         console.log("Connection " + connID + " failed to join room " + roomID + ", room does not exist");
-        return false;
+        return 2100;
     }
 
     var room = rooms[roomID];
@@ -63,14 +45,14 @@ module.exports.JoinRoom = function (connection, roomID, pw) {
         // already exceeded maximum amount of people allowed in the room
         console.log("Connection " + connID + " failed to join room " + roomID +
             ", room limit = " + room["max_p"] + ", people count = " + people.length);
-        return false;
+        return 2101;
     }
 
     if (room["type"] == 2 && pw !== room["pw"]) {
         // check password for private rooms
         console.log("Connection " + connID + " failed to join room " + roomID +
             ", correct password = " + room["pw"] + ", received password = " + pw);
-        return false;
+        return 2102;
     }
 
     // the connection joins the room
@@ -111,6 +93,78 @@ module.exports.LeaveRoom = function (connection) {
     delete people[connID];
     delete connection["room_id"];
     return true;
+}
+
+// requests room listing
+module.exports.GetRecentRoomList = function () {
+    var ret = {};
+    var config = Config.GetConfig();
+    var count = config["rlist_count"];
+    var roomIDs = Object.keys(rooms);
+    if (roomIDs.length <= 0)
+        return {};
+
+    var end = 0;
+    if (roomIDs.length > count)
+        end = roomIDs.length - count;
+
+    for (var i = roomIDs.length - 1; i >= end; i--) {
+        var roomID = roomIDs[i];
+        var room = rooms[roomID];
+
+        var retRoom = {};
+        ret[roomID] = retRoom;
+        retRoom["name"] = room["name"];
+        retRoom["type"] = room["type"];
+        retRoom["max_p"] = room["max_p"];
+
+        // count how many people are in this room at the moment
+        var people = room["people"];
+        var connIDs = Object.keys(people);
+        var count = connIDs.length;
+        retRoom["size_p"] = count;
+    }
+
+    return ret;
+}
+
+// get specific room's info
+module.exports.GetRoomInfo = function (roomID) {
+    if (!rooms.hasOwnProperty(roomID)) {
+        console.log("Failed to get room info, room listing does not contain " + roomID);
+        return false;
+    }
+
+    var room = rooms[roomID];
+    var retRoom = {};
+    retRoom["name"] = room["name"];
+    retRoom["type"] = room["type"];
+    retRoom["max_p"] = room["max_p"];
+
+    // count how many people are in this room at the moment
+    var people = room["people"];
+    var retPeople = {};
+    retRoom["people"] = retPeople;
+
+    var connIDs = Object.keys(people);
+    for (var i = 0; i < connIDs.length; i++) {
+        var connID = connIDs[i];
+        var username = Connection.GetUserNameByID(connID);
+        retPeople[connID] = username;
+    }
+
+    return retRoom;
+}
+
+// get room's members
+module.exports.GetRoomMembers = function (roomID) {
+    if (!rooms.hasOwnProperty(roomID)) {
+        console.log("Failed to get room members, listing does not contain " + roomID);
+        return false;
+    }
+
+    var room = rooms[roomID];
+    return room["people"];
 }
 
 // is the room specs valid

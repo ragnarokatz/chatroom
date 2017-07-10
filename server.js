@@ -65,7 +65,7 @@ wsServer.on('request', function (request) {
     connection.on('pong', heartbeat);
 
     // message client that connection is successful
-    Message.SendClientMessage(connection, 100, { "r": 1 })
+    Message.SendClientMessage(connection, 100, { "ret": 1 })
 });
 
 // read in config, then start the server

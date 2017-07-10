@@ -5,5 +5,6 @@
     "rname_size_max": 10,
     "pw_size_min": 6,
     "pw_size_max": 12,
-    "max_p": [ 2, 5, 10, 20 ]
+    "max_p": [ 2, 5, 10, 20 ],
+    "rlist_count": 20
 }

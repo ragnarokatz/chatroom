@@ -53,3 +53,11 @@ module.exports.GetUserName = function (connection) {
         return connection["username"];
     }
 }
+
+module.exports.GetUserNameByID = function (connID) {
+    var connection = GetConnection(connID);
+    if (!connection)
+        return false;
+
+    return GetUserName(connection);
+}
