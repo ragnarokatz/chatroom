@@ -1,6 +1,7 @@
-const Connections = require("./connection.js");
-const Messages = require("./message.js");
-const Rooms = require("./room.js");
+const Config = require("./foundation/config.js");
+const Connection = require("./connection.js");
+const Message = require("./message.js");
+const Room = require("./room.js");
 
 const express = require('express');
 const http = require('http');
@@ -49,14 +50,14 @@ wsServer.on('request', function (request) {
     connection.on('close', function (reasonCode, description) {
         console.log((new Date()) + ': Connection ' + connection.remoteAddress +
             ' disconnected. Connection ID: ' + connection.id);
-        Rooms.LeaveRoom(connection);
-        Connections.RemoveConnection(connection);
+        Room.LeaveRoom(connection);
+        Connection.RemoveConnection(connection);
     });
 
     // on connection message
     connection.on('message', function (message) {
         console.log("Received message from " + connection.id + ", message = " + message);
-        Messages.ProcessMessage(message, connection);
+        Message.ProcessMessage(message, connection);
     });
 
     // on connection test ping
@@ -64,23 +65,35 @@ wsServer.on('request', function (request) {
     connection.on('pong', heartbeat);
 
     // message client that connection is successful
-    Messages.SendClientMessage(connection, 100, { "r": 1 })
+    Message.SendClientMessage(connection, 100, { "r": 1 })
 });
 
-// start the server
-server.listen(PORT, function () {
-    console.log("Server started, listening on " + server.address().port);
-});
-
-// check for dead connections
-const interval = setInterval(function () {
-    console.log("Check for heartbeat");
-    wsServer.clients.forEach(function (ws) {
-        if (ws.isAlive === false) {
-            console.log("Socket no longer alive, terminating");
-            return ws.terminate();
-        }
-        ws.isAlive = false;
-        ws.ping('', false, true);
+// read in config, then start the server
+Config.InitConfig()
+    .then(function () {
+        server.listen(PORT, function () {
+            console.log("Server started, listening on " + server.address().port);
+        });
+    })
+    .catch(function (error) {
+        console.log(error);
+        process.exit(1);
     });
-}, 30000);
+
+// check for dead connections, every 30 seconds
+setInterval(function () {
+    console.log("Check for heartbeat service");
+    var length = wsServer.clients.length;
+    for (var i = 0; i < length; i++) {
+        var connection = wsServer.clients[i];
+        if (connection.isAlive === false) {
+            // no pong response back from client
+            console.log("Connection is no longer alive, terminating");
+            connection.terminate();
+        } else {
+            // ping client for response
+            connection.isAlive = false;
+            connection.ping('', false, true);
+        }
+    }
+}, 30 * 1000);

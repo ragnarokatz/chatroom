@@ -1,6 +1,7 @@
 // room.js
 var Util = require("./foundation/util.js");
 var Config = require("./foundation/config.js");
+var Connection = require("./connection.js");
 
 var roomIDCounter = 0;
 var rooms = {};
@@ -18,7 +19,7 @@ module.exports.CreateRoom = function (room) {
 
     var roomID = roomIDCounter.toString();
     room["id"] = roomID;
-    room["m_date"] = new Date().toString();
+    room["date"] = new Date().toString();
     room["people"] = {}; // initiate people object for storing connection ids
 
     console.log("Creating room with id " + roomID);
@@ -192,11 +193,64 @@ function isRoomValid(room) {
     return true;
 }
 
-// inactive messenger cleanup service
+// Inactive client in room cleanup service, every 30 minutes
+// checks for people that have joined the room more than 12 hours ago
+setInterval(function () {
+    console.log("Inactive client in room cleanup service");
 
-// empty room cleanup service
+    var dateNow = new Date();
+    var dateMax = new Date(1970, 1, 1, 12, 0, 0);
+    var roomIDs = Object.keys(rooms);
 
-// addendum
+    for (var i = 0; i < roomIDs.length; i++) {
+        var roomID = roomIDs[i];
+        var room = rooms[roomID];
+        var people = room["people"];
+        var connIDs = Object.keys(people);
+
+        for (var j = 0; j < connIDs.length; j++) {
+            var connID = connIDs[j];
+            var dateStr = people[connID];
+            var date = Date.parse(dateStr);
+            if ((dateNow - date) < dateMax)
+                // less than 12 hours connected
+                continue;
+
+            // more than 12 hours connected, clean up id from room
+            delete people[connID];
+        }
+    }
+}, 30 * 60 * 1000);
+
+// empty room cleanup service, removes room that no longer have any people
+// activates every half an hour, also ignores rooms that have been created in the last 5 minutes
+setInterval(function () {
+    console.log("Empty room cleanup service");
+
+    var dateNow = new Date();
+    var dateMax = new Date(1970, 1, 1, 0, 5, 0);
+    var roomIDs = Object.keys(rooms);
+
+    for (var i = 0; i < roomIDs.length; i++) {
+        var roomID = roomIDs[i];
+        var room = rooms[roomID];
+        var people = room["people"];
+        if (!Util.IsEmptyObject(people))
+            // room is not empty yet
+            continue;
+
+        var dateStr = room["date"];
+        var date = Date.parse(dateStr);
+        if ((dateNow - date) < dateMax)
+            // room life is less than 5 minutes
+            continue;
+
+        // removes empty room
+        delete rooms[roomID];
+    }
+}, 30 * 60 * 1000);
+
+// appendix
 /* this is what room object looks like
 {
     "4" : {
