@@ -1,5 +1,5 @@
 // message.js
-const Rooms = require("./Room.js");
+const Room = require("./Room.js");
 
 // Broadcast to all open connections
 function broadcast(data) {
