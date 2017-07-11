@@ -18,12 +18,6 @@ app.use(function (req, res) {
     res.send("Homepage");
 });
 
-// check to see if this origin is allowed
-function isOriginAllowed(origin) {
-    // put logic here to detect whether the specified origin is allowed.
-    return true;
-}
-
 // heartbeat callback response
 function heartbeat() {
     console.log("Heartbeat callback response");
@@ -31,19 +25,10 @@ function heartbeat() {
 }
 
 // on request connection
-wsServer.on('request', function (request) {
-    if (!isOriginAllowed(request.origin)) {
-        // reject connection
-        request.reject();
-        console.log((new Date()) + ': Connection from origin ' + request.origin + ' rejected');
-        return;
-    }
-
-    // allow connection
-    var connection = request.accept(null, request.origin);
+wsServer.on('connection', function (connection, request) {
 
     // add to connection map
-    Connections.AddConnection(connection);
+    Connection.AddConnection(connection);
     console.log((new Date()) + ': Connection ID ' + connection.id + ' accepted from origin ' + request.origin);
 
     // on connection close
@@ -55,9 +40,10 @@ wsServer.on('request', function (request) {
     });
 
     // on connection message
-    connection.on('message', function (message) {
+    connection.on('message', function (byteArr) {
+        var message = byteArr.toString();
         console.log("Received message from " + connection.id + ", message = " + message);
-        Message.ProcessMessage(message, connection);
+        Message.ProcessClientMessage(message, connection);
     });
 
     // on connection test ping
