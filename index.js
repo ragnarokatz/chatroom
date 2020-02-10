@@ -17,6 +17,10 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('user disconnected');
     });
+
+    socket.on('message', function (msg) {
+        console.log('message: ' + msg);
+    });
 });
 
 http.listen(process.env.PORT, function () {
