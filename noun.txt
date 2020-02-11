@@ -16,12 +16,10 @@ androecium
 sorosis
 sassanid
 separatrix
-knight_templar
 cirrocumulus
 ephor
 tophus
 alewife
-hanger-on
 zero
 clepsydra
 aecidium
@@ -39,7 +37,6 @@ motto
 promycelium
 gnosis
 adenoma
-brother-in-law
 dichasium
 fovea
 edema
@@ -50,14 +47,11 @@ gingiva
 tornado
 archerfish
 mitzvah
-amicus_curiae
 paperknife
 gymnasium
 trapezium
-governor_general
 comatula
 milium
-paso_doble
 shophar
 zoaea
 innuendo
@@ -87,10 +81,8 @@ epexegesis
 fricando
 ctenidium
 hypogastrium
-base_on_balls
 devilfish
 vita
-sister-in-law
 smalto
 desperado
 dogma
@@ -102,10 +94,8 @@ foot
 knife
 papula
 kohlrabi
-father-in-law
 hematozoon
 shacko
-vena_cava
 volcano
 brainchild
 prothalamion
@@ -130,7 +120,6 @@ kroon
 chiasmus
 rabbitfish
 swami
-robe-de-chambre
 mestizo
 triumvir
 verruca
@@ -155,7 +144,6 @@ scotoma
 intermezzo
 schul
 gammadion
-objet_d'art
 oldwife
 sent
 epicardium
@@ -165,7 +153,6 @@ sympodium
 pollex
 monopteros
 pterygium
-broadcast_medium
 stimulus
 morphosis
 argumentum
@@ -184,7 +171,6 @@ struma
 spearfish
 fabliau
 fatso
-roman-fleuve
 amorino
 dilettante
 superhero
@@ -196,7 +182,6 @@ salpinx
 ox
 taxi
 alluvium
-opera_seria
 ischium
 pileus
 pseudopodium
@@ -226,7 +211,6 @@ quadriga
 schatchen
 scherzando
 astragalus
-passer-by
 sistrum
 solum
 hypothesis
@@ -271,12 +255,10 @@ bucko
 jinni
 marchese
 spectrum
-fleur-de-lis
 is
 papilloma
 genu
 enarthrosis
-grant-in-aid
 beadsman
 chapati
 wharf
@@ -290,7 +272,6 @@ bacchant
 bicentenary
 aphelion
 stroma
-optic_axis
 hetaira
 eisteddfod
 faeroese
@@ -306,7 +287,6 @@ glioma
 polis
 bilbo
 ultimatum
-son-in-law
 muskellunge
 fetial
 heraklid
@@ -324,7 +304,6 @@ stapes
 decennium
 equilibrium
 continuum
-aide-memoire
 salvo
 syrinx
 speculum
@@ -377,7 +356,6 @@ numbfish
 episternum
 aardwolf
 relatum
-wagon-lit
 mamma
 involucre
 chrysalis
@@ -406,7 +384,6 @@ propylon
 chazan
 incus
 mucro
-pari-mutuel
 gurnar
 his
 paterfamilias
@@ -420,7 +397,6 @@ lungfish
 torus
 jingo
 morula
-man-of-war
 prosencephalon
 fraenum
 sephardi
@@ -462,7 +438,6 @@ stele
 thesis
 remex
 fez
-lady-in-waiting
 protasis
 moshav
 vis
@@ -477,10 +452,8 @@ automaton
 eyrir
 navajo
 exemplum
-inquisitor-general
 contralto
 loti
-medulla_oblongata
 aurora
 lev
 ricercare
@@ -490,7 +463,6 @@ bolivar
 caudex
 calf
 calyx
-moment_of_truth
 nibelung
 intima
 vulva
@@ -509,7 +481,6 @@ perithecium
 bacchius
 tallith
 hippocampus
-agent-general
 alumna
 spadix
 cephalothorax
@@ -518,8 +489,6 @@ penicillium
 stirps
 paraleipsis
 tenia
-flower-de-luce
-cul-de-sac
 dybbuk
 palpus
 galea
@@ -555,7 +524,6 @@ arcanum
 modulus
 crusado
 elenchus
-man-at-arms
 congius
 gemsbuck
 embolus
@@ -574,7 +542,6 @@ nodus
 curriculum
 appendix
 urethra
-director-general
 ferula
 flora
 boarfish
@@ -621,7 +588,6 @@ hemelytron
 criterion
 bravo
 aponeurosis
-theatre-in-the-round
 eyir
 hemielytron
 tryma
@@ -656,7 +622,6 @@ endothelium
 medulla
 bimbo
 bisectrix
-king-of-arms
 tomentum
 aggiornamento
 corona
@@ -699,7 +664,6 @@ polyzoarium
 titmouse
 shellfish
 stratus
-bureau_de_change
 ramentum
 scopula
 agouti
@@ -711,7 +675,6 @@ frogfish
 aboiteau
 megasporangium
 germen
-hen-and-chickens
 baculum
 catalysis
 fibroma
@@ -744,7 +707,6 @@ tax
 trapezohedron
 cowfish
 nucellus
-knight_bachelor
 facula
 cirrostratus
 onager
@@ -760,7 +722,6 @@ ubermensch
 pigfish
 corybant
 primigravida
-aide-de-camp
 cambium
 myxoma
 apex
@@ -770,7 +731,6 @@ tarsometatarsus
 madrono
 vagus
 scudo
-gris-gris
 mediastinum
 pentimento
 umbo
@@ -788,7 +748,6 @@ penni
 hilus
 epicalyx
 tomato
-gentleman-farmer
 anticlinorium
 pappus
 gazebo
@@ -798,8 +757,6 @@ rockfish
 vitta
 indusium
 haematolysis
-gentleman-at-arms
-bain-marie
 codfish
 frijol
 symphysis
@@ -853,7 +810,6 @@ lepton
 numen
 hilum
 rosarium
-mass_medium
 persona
 menstruum
 flittermouse
@@ -875,7 +831,6 @@ testis
 morphallaxis
 fasciculus
 endosteum
-runner-up
 ibex
 staphylococcus
 lavabo
@@ -898,7 +853,6 @@ desideratum
 teras
 noumenon
 aboideau
-court_martial
 furculum
 limulus
 filefish
@@ -907,7 +861,6 @@ hetaera
 midwife
 gonion
 crambo
-concerto_grosso
 veto
 halo
 heliozoan
@@ -920,7 +873,6 @@ concerto
 forum
 phallus
 oceanarium
-militate_against
 calico
 feria
 mycelium
@@ -938,7 +890,6 @@ putamen
 crawfish
 miosis
 avitaminosis
-chaise_longue
 colossus
 flabellum
 hypogeum
@@ -951,7 +902,6 @@ entasis
 beef
 fundus
 vacuum
-arc-boutant
 entameba
 insectarium
 hagfish
@@ -968,7 +918,6 @@ paparazzo
 haematoma
 morisco
 piscina
-cook-general
 cicada
 ulna
 hypothalamus
@@ -983,7 +932,6 @@ ascesis
 hogfish
 viator
 gomphosis
-lying-in
 sente
 fauna
 lionfish
@@ -994,7 +942,6 @@ locus
 interrex
 gladiolus
 synopsis
-whipper-in
 dorsum
 cypsela
 parhelion
@@ -1032,7 +979,6 @@ fresco
 ocellus
 syndesmosis
 antitragus
-carrying-on
 stucco
 animalculum
 pericranium
@@ -1040,7 +986,6 @@ succubus
 stenosis
 uncus
 ectozoan
-corpus_luteum
 prothorax
 comedo
 obligato
@@ -1048,7 +993,6 @@ hematolysis
 mouse
 oarfish
 ribbonfish
-lingua_franca
 praenomen
 crescendo
 lied
@@ -1060,7 +1004,6 @@ media
 superstratum
 encephaloma
 concertante
-billet-doux
 hamulus
 hydromedusa
 thyrsus
@@ -1087,7 +1030,6 @@ rom
 wife
 coelenteron
 epenthesis
-mother_superior
 periosteum
 libretto
 werewolf
@@ -1102,7 +1044,6 @@ bibliotheca
 fibrilla
 chuvash
 pallium
-chef-d'ouvre
 carpus
 solidus
 anthrax
@@ -1133,11 +1074,9 @@ blindfish
 mudejar
 uredinium
 heder
-beche-de-mer
 lomentum
 strappado
 soldo
-felo_de_se
 honorarium
 chromonema
 cumulostratus
@@ -1212,9 +1151,7 @@ foretooth
 metathesis
 syssarcosis
 pinetum
-bain_marie
 hypophysis
-proces-verbal
 areola
 sanitarium
 patina
@@ -1226,15 +1163,12 @@ assagai
 gastrula
 catabasis
 subgenus
-vice-chairman
 sanctum
 epicedium
 floreat
 culpa
-man_of_letters
 shabbas
 rhonchus
-marvel-of-peru
 plectron
 ommatidium
 oasis
@@ -1243,11 +1177,9 @@ lumpfish
 symposium
 pancratium
 wolf
-mother-in-law
 hazzan
 streptococcus
 epigastrium
-heir-at-law
 fermata
 aura
 enneahedron
@@ -1316,7 +1248,6 @@ phylum
 dialysis
 lentigo
 boschbok
-major_axis
 phyle
 credendum
 pronucleus
@@ -1334,7 +1265,6 @@ fibula
 caldarium
 malleus
 frons
-attorney-at-law
 negro
 matrix
 mir
@@ -1412,7 +1342,6 @@ saltarello
 cimex
 emphasis
 endothecium
-master-at-arms
 go
 oceanid
 herbarium
@@ -1444,7 +1373,6 @@ delphinium
 epiglottis
 canzone
 splenius
-house_of_cards
 chlamys
 penetralium
 sternum
@@ -1455,7 +1383,6 @@ silverfish
 conjunctiva
 capitulum
 ballista
-chinese_eddo
 tessera
 solfeggio
 floccus
@@ -1464,7 +1391,6 @@ peplum
 sphinx
 sunfish
 glissando
-cavo-rilievo
 rhombus
 amphioxus
 organon
@@ -1515,7 +1441,6 @@ imperium
 punchinello
 auspex
 lymphangitis
-comic_strip
 utriculus
 billfish
 rectum
@@ -1563,16 +1488,13 @@ diverticulum
 sudatorium
 bravado
 gynoecium
-pied-a-terre
 scapula
 synapsis
 abscissa
-secretary-general
 stipes
 androsphinx
 vertigo
 limes
-aid-de-camp
 sheatfish
 micrococcus
 prothallium
@@ -1589,7 +1511,6 @@ bryozoan
 antithesis
 conidium
 crayfish
-mont-de-piete
 anamnesis
 cercus
 spiculum
@@ -1624,7 +1545,6 @@ dingo
 mora
 clinandrium
 encephalon
-acre-foot
 telangiectasia
 mycorrhiza
 mafioso
@@ -1682,10 +1602,8 @@ frau
 maxilla
 ginglymus
 divertimento
-corpus_striatum
 carolus
 real
-loup-garou
 cyma
 diluvium
 spermatogonium
@@ -1701,7 +1619,6 @@ madame
 maximum
 squilla
 trichina
-flight_of_stairs
 frenulum
 insula
 bijou
@@ -1715,13 +1632,10 @@ testudo
 naevus
 himation
 vorticella
-box_kodak
 hasid
 carpogonium
-daughter-in-law
 epizoan
 synclinorium
-farmer-general
 stratocumulus
 batfish
 maccaroni
@@ -1738,7 +1652,6 @@ kaddish
 equisetum
 frustum
 clitellum
-trou-de-loup
 gestalt
 torso
 senusi
@@ -1751,7 +1664,6 @@ ommiad
 faroese
 addendum
 shittah
-auto-da-fe
 stoa
 hallux
 rotl
@@ -1792,7 +1704,6 @@ spermogonium
 santims
 maar
 coma
-fleur-de-lys
 hyrax
 cavatina
 stomodeum
@@ -1805,7 +1716,6 @@ dibbuk
 gobo
 sclerotium
 costa
-going-over
 sheaf
 housewife
 bonefish
@@ -1861,7 +1771,6 @@ cochlea
 hendecahedron
 hypha
 ligula
-mover_and_shaker
 spica
 tetraskelion
 ichthyosaurus
@@ -1885,7 +1794,6 @@ rostrum
 cry
 conferva
 horologium
-cheval-de-frise
 operculum
 marchesa
 parament
@@ -1912,7 +1820,6 @@ amoebiasis
 caesura
 myiasis
 scaldfish
-alto-relievo
 dealfish
 reseau
 hoof
@@ -1929,11 +1836,8 @@ rumen
 syllabus
 herr
 zoea
-judge_advocate_general
 camera
-phi-phenomenon
 shammas
-street_child
 perinephrium
 coccus
 foramen
@@ -1942,7 +1846,6 @@ hypnosis
 parasyntheton
 leaf
 lingua
-jack-in-the-box
 pul
 guitarfish
 pneumobacillus
