@@ -26,7 +26,6 @@ spry
 downer
 oliver
 limy
-all-arounder
 heavy
 smoky
 pearler
@@ -90,7 +89,6 @@ brooder
 shirty
 busty
 churchy
-fore-and-after
 tasty
 bony
 shrubby
@@ -163,12 +161,10 @@ ungainly
 wealthy
 horsy
 customer
-first-rater
 squashy
 stocker
 weakly
 poky
-left-hander
 empty
 massy
 wiry
@@ -276,7 +272,6 @@ sloppy
 scraggy
 bushy
 cheery
-part-timer
 edger
 halter
 webby
@@ -303,8 +298,6 @@ hairy
 fatty
 homey
 grader
-first-stringer
-right-hander
 skimpy
 liter
 turfy
@@ -442,7 +435,6 @@ sampler
 dowie
 runny
 cagey
-second-rater
 caster
 crafty
 plumber
@@ -732,7 +724,6 @@ weeny
 fleshly
 thready
 fussy
-third-rater
 starchy
 cheesy
 whimsy
@@ -765,7 +756,6 @@ dim
 signaler
 wan
 curly
-right-winger
 guilty
 angry
 dishy
@@ -819,7 +809,5 @@ speedy
 smelly
 frisky
 lengthy
-old-timer
-left-winger
 creamer
 loony
