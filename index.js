@@ -12,7 +12,8 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    console.log(`a user connected, assigned socket id ${socket.id}`);
+    console.log(`${socket}`);
 
     socket.on('disconnect', function () {
         console.log('user disconnected');
@@ -20,7 +21,11 @@ io.on('connection', function (socket) {
 
     socket.on('message', function (message) {
         console.log('message: ' + message);
-		socket.broadcast.emit('message', message);
+        socket.broadcast.emit('message', message);
+    });
+
+    socket.on('reconnect', function (attemptNum) {
+        console.log(`socket ${socket} has reconnected, assigned new id ${socket.id}`);
     });
 });
 
