@@ -1401,7 +1401,6 @@ allodium
 antrum
 haemodialysis
 differentia
-vagina
 cerebellum
 subphylum
 fieldmouse
@@ -1835,7 +1834,6 @@ sacrum
 pleura
 anthodium
 ichthyosaur
-penis
 sinciput
 brother
 lytta
