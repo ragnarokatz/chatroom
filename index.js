@@ -46,10 +46,12 @@ m.connect()
 
     Promise.all([nounGetAll, verbGetAll, adjGetAll])
       .then(values => {
+        // ################################################################################
+        // Utils module setup
         importWords(values[0], values[1], values[2]);
 
         // ################################################################################
-        // Socket IO Setup
+        // Socket IO setup
         io.on("connection", function(socket) {
           console.log(`a user connected, assigned socket id ${socket.id}`);
 
@@ -59,7 +61,10 @@ m.connect()
 
           socket.on("message", function(message) {
             console.log("message: " + message);
-            socket.broadcast.emit("message", message);
+
+            obj = { sender: socket.username, text: message, time: new Date() };
+            m.messageAdd(obj);
+            socket.broadcast.emit("message", obj);
           });
 
           socket.on("reconnect", function(attemptNum) {
@@ -69,7 +74,10 @@ m.connect()
           });
 
           socket.username = generateUsername();
-          socket.emit("name", username);
+          socket.emit("username", username);
+          console.log(
+            `assigning username ${username} to socket id ${socket.id}`
+          );
         });
 
         http.listen(process.env.PORT, function() {
