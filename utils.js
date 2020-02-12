@@ -1,16 +1,16 @@
 // utils.js
 
-data = {};
+nouns = [];
+verbs = [];
+adjs = [];
 
 function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-module.exports.importReferenceData = function(data) {
-  this.data = data;
-};
+module.exports.importWords = function(nouns, verbs, adjs) {};
 
-module.exports.generateName = function() {
+module.exports.generateUsername = function() {
   let name = "";
   for (key in data) {
     index = generateRandomNumber(0, data[key].length);
