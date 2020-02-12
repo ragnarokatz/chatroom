@@ -73,7 +73,10 @@ m.connect()
             console.log("message: " + message);
 
             obj = { sender: socket.username, text: message, time: new Date() };
-            m.messageAdd(obj);
+            m.messageAdd(obj).catch(err => {
+              console.log("Unable to add message to database: \n" + err);
+            });
+
             socket.broadcast.emit("message", obj);
           });
 
