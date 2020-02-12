@@ -40,33 +40,48 @@ app.use((req, res) => {
 
 m.connect()
   .then(() => {
-    // ################################################################################
-    // Socket IO Setup
-    io.on("connection", function(socket) {
-      console.log(`a user connected, assigned socket id ${socket.id}`);
+    const nounGetAll = m.nounGetAll();
+    const verbGetAll = m.verbGetAll();
+    const adjGetAll = m.adjGetAll();
 
-      socket.on("disconnect", function() {
-        console.log("user disconnected");
+    Promise.all([nounGetAll, verbGetAll, adjGetAll])
+      .then(values => {
+        console.log(values[0]);
+
+        // ################################################################################
+        // Socket IO Setup
+        io.on("connection", function(socket) {
+          console.log(`a user connected, assigned socket id ${socket.id}`);
+
+          socket.on("disconnect", function() {
+            console.log("user disconnected");
+          });
+
+          socket.on("message", function(message) {
+            console.log("message: " + message);
+            socket.broadcast.emit("message", message);
+          });
+
+          socket.on("reconnect", function(attemptNum) {
+            console.log(
+              `socket ${socket} has reconnected, assigned new id ${socket.id}`
+            );
+          });
+
+          socket.username = generateUsername();
+          socket.emit("name", username);
+        });
+
+        http.listen(process.env.PORT, function() {
+          console.log(
+            `Chatroom server is listening on port ${process.env.PORT}`
+          );
+        });
+      })
+      .catch(err => {
+        console.log("Unable to retrieve words from database:\n" + err);
+        process.exit();
       });
-
-      socket.on("message", function(message) {
-        console.log("message: " + message);
-        socket.broadcast.emit("message", message);
-      });
-
-      socket.on("reconnect", function(attemptNum) {
-        console.log(
-          `socket ${socket} has reconnected, assigned new id ${socket.id}`
-        );
-      });
-
-      socket.username = generateUsername();
-      socket.emit("name", username);
-    });
-
-    http.listen(process.env.PORT, function() {
-      console.log(`Chatroom server is listening on port ${process.env.PORT}`);
-    });
   })
   .catch(err => {
     console.log("Unable to start the server:\n" + err);
