@@ -88,7 +88,7 @@ module.exports = function() {
         // Remove that function call when deploying into production
         Messages.find()
           .limit(100)
-          .sort({ time: "asc" })
+          .sort({ time: "desc" })
           .exec((error, items) => {
             if (error) {
               // Query error
