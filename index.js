@@ -85,7 +85,8 @@ m.connect()
             getMessageHistory(socket);
           });
 
-          socket.username = generateUsername();
+          var username = generateUsername();
+          socket.username = username;
           socket.emit("username", username);
           console.log(
             `assigning username ${username} to socket id ${socket.id}`
