@@ -15,5 +15,6 @@ var verbSchema = new Schema({
 var adjSchema = new Schema({
   word: String
 });
+
 // Make schema available to the application
 module.exports = { nounSchema, verbSchema, adjSchema };

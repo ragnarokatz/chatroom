@@ -1,8 +1,3 @@
-// read in reference data for utils
-// read in nouns, verbs, adjs
-
-// provide routes for normal database usage
-
 // ################################################################################
 // Data service operations setup
 
@@ -14,15 +9,18 @@ mongoose.set("useCreateIndex", true);
 // Load the schemas...
 
 // Data entities; the standard format is:
-const carSchema = require("./msc-car.js");
-// Add others as needed
+const { nounSchema, verbSchema, adjSchema } = require("./msc-words.js");
+const messageSchema = require("./msc-message.js");
 
 // ################################################################################
 // Define the functions that can be called by server.js
 
 module.exports = function() {
   // Collection properties, which get their values upon connecting to the database
-  let Cars;
+  let Messages;
+  let Nouns;
+  let Verbs;
+  let Adjs;
 
   return {
     // ############################################################
@@ -35,7 +33,7 @@ module.exports = function() {
 
         // The following works for localhost...
         // Replace the database name with your own value
-        mongoose.connect("mongodb://localhost:27017/week2", {
+        mongoose.connect(process.env.DB_CONNECTION_STRING, {
           connectTimeoutMS: 5000,
           useUnifiedTopology: true
         });
@@ -69,7 +67,10 @@ module.exports = function() {
         // https://nodejs.org/api/events.html#events_emitter_once_eventname_listener
         db.once("open", () => {
           console.log("Connection to the database was successful");
-          Cars = db.model("cars", carSchema, "cars");
+          Messages = db.model("messages", messageSchema, "messages");
+          Nouns = db.model("nouns", nounSchema, "nouns");
+          Verbs = db.model("verbs", verbSchema, "verbs");
+          Adjs = db.model("adjs", adjSchema, "adjs");
           // Add others here...
 
           resolve();
@@ -78,16 +79,16 @@ module.exports = function() {
     },
 
     // ############################################################
-    // Car requests
+    // Message requests
 
-    carGetAll: function() {
+    messageGetAll: function() {
       return new Promise(function(resolve, reject) {
         // Fetch all documents
         // During development and testing, can "limit" the returned results to a smaller number
         // Remove that function call when deploying into production
-        Cars.find()
-          .limit(20)
-          .sort({ make: "asc", model: "asc", year: "asc" })
+        Messages.find()
+          .limit(100)
+          .sort({ time: "asc" })
           .exec((error, items) => {
             if (error) {
               // Query error
@@ -99,28 +100,9 @@ module.exports = function() {
       });
     },
 
-    carGetById: function(itemId) {
+    messageAdd: function(newItem) {
       return new Promise(function(resolve, reject) {
-        // Find one specific document
-        Cars.findById(itemId, (error, item) => {
-          if (error) {
-            // Find/match is not found
-            return reject(error.message);
-          }
-          // Check for an item
-          if (item) {
-            // Found, one object will be returned
-            return resolve(item);
-          } else {
-            return reject("Not found");
-          }
-        });
-      });
-    },
-
-    carAdd: function(newItem) {
-      return new Promise(function(resolve, reject) {
-        Cars.create(newItem, (error, item) => {
+        Messages.create(newItem, (error, item) => {
           if (error) {
             // Cannot add item
             return reject(error.message);
@@ -131,38 +113,70 @@ module.exports = function() {
       });
     },
 
-    carEdit: function(newItem) {
+    messageDeleteOld: function() {
       return new Promise(function(resolve, reject) {
-        Cars.findByIdAndUpdate(
-          newItem._id,
-          newItem,
-          { new: true },
-          (error, item) => {
+        var cutoff = new Date();
+        cutoff.setYear(cutoff.getYear() - 1);
+        Messages.find({ time: { $lt: cutoff } })
+          .remove()
+          .exec(error => {
             if (error) {
-              // Cannot edit item
+              // Cannot delete item
               return reject(error.message);
             }
-            // Check for an item
-            if (item) {
-              // Edited object will be returned
-              return resolve(item);
-            } else {
-              return reject("Not found");
-            }
-          }
-        );
+            // Return success, but don't leak info
+            return resolve();
+          });
       });
     },
 
-    carDelete: function(itemId) {
+    // ############################################################
+    // Word requests
+
+    nounGetAll: function() {
       return new Promise(function(resolve, reject) {
-        Cars.findByIdAndRemove(itemId, error => {
+        // Fetch all documents
+        // During development and testing, can "limit" the returned results to a smaller number
+        // Remove that function call when deploying into production
+        Nouns.find().exec((error, items) => {
           if (error) {
-            // Cannot delete item
+            // Query error
             return reject(error.message);
           }
-          // Return success, but don't leak info
-          return resolve();
+          // Found, a collection will be returned
+          return resolve(items);
+        });
+      });
+    },
+
+    verbGetAll: function() {
+      return new Promise(function(resolve, reject) {
+        // Fetch all documents
+        // During development and testing, can "limit" the returned results to a smaller number
+        // Remove that function call when deploying into production
+        Verbs.find().exec((error, items) => {
+          if (error) {
+            // Query error
+            return reject(error.message);
+          }
+          // Found, a collection will be returned
+          return resolve(items);
+        });
+      });
+    },
+
+    adjGetAll: function() {
+      return new Promise(function(resolve, reject) {
+        // Fetch all documents
+        // During development and testing, can "limit" the returned results to a smaller number
+        // Remove that function call when deploying into production
+        Adjs.find().exec((error, items) => {
+          if (error) {
+            // Query error
+            return reject(error.message);
+          }
+          // Found, a collection will be returned
+          return resolve(items);
         });
       });
     }
