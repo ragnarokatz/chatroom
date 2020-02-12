@@ -3,7 +3,7 @@
 
 require("dotenv").config();
 
-var { importWords, generateUsername } = require("utils.js");
+var { importWords, generateUsername } = require("./utils.js");
 var express = require("express");
 var app = express();
 var http = require("http").createServer(app);
@@ -46,7 +46,7 @@ m.connect()
 
     Promise.all([nounGetAll, verbGetAll, adjGetAll])
       .then(values => {
-        console.log(values[0]);
+        importWords(values[0], values[1], values[2]);
 
         // ################################################################################
         // Socket IO Setup
