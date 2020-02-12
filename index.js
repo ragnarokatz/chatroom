@@ -34,6 +34,16 @@ app.use((req, res) => {
   res.status(404).send("Resource not found");
 });
 
+function getMessageHistory(socket) {
+  m.messageGetAll()
+    .then(data => {
+      socket.emit("history", data);
+    })
+    .catch(err => {
+      console.log("Unable to get historical messages from database: \n" + err);
+    });
+}
+
 // ################################################################################
 // Attempt to connect to the database, and
 // tell the app to start listening for requests
@@ -71,6 +81,8 @@ m.connect()
             console.log(
               `socket ${socket} has reconnected, assigned new id ${socket.id}`
             );
+
+            getMessageHistory(socket);
           });
 
           socket.username = generateUsername();
@@ -78,6 +90,8 @@ m.connect()
           console.log(
             `assigning username ${username} to socket id ${socket.id}`
           );
+
+          getMessageHistory(socket);
         });
 
         http.listen(process.env.PORT, function() {
