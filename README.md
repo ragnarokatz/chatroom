@@ -11,10 +11,11 @@
 
 ### Collections
 
-- messages: sender, text, time
-- nouns: word
-- verbs: word
-- adjs: word
+- `messages: { sender: String, text: String, time: Date }`
+- `users: { fingerprintId: String, username: String, lastActiveTime: Date }`
+- `nouns: { word: String }`
+- `verbs: { word: String }`
+- `adjs: { word: String }`
 
 ### Word database used
 
