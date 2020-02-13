@@ -2,7 +2,7 @@
 
 let nouns = null;
 let verbs = null;
-let adjs = null; // unused for now
+let adjs = null;
 
 function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -29,8 +29,8 @@ module.exports.importWords = function(n, v, a) {
 module.exports.generateUsername = function() {
   let name = "";
 
-  var index = generateRandomNumber(0, verbs.length);
-  name += verbs[index];
+  var index = generateRandomNumber(0, adjs.length);
+  name += adjs[index];
 
   index = generateRandomNumber(0, nouns.length);
   name += nouns[index];
