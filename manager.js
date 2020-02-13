@@ -1,6 +1,4 @@
-// ################################################################################
 // Data service operations setup
-
 const mongoose = require("mongoose");
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -13,9 +11,7 @@ const { nounSchema, verbSchema, adjSchema } = require("./msc-words.js");
 const messageSchema = require("./msc-message.js");
 const userSchema = require("./msc-user.js");
 
-// ################################################################################
 // Define the functions that can be called by server.js
-
 module.exports = function() {
   // Collection properties, which get their values upon connecting to the database
   let Messages;
@@ -25,9 +21,7 @@ module.exports = function() {
   let Adjs;
 
   return {
-    // ############################################################
     // Connect to the database
-
     connect: function() {
       return new Promise(function(resolve, reject) {
         // Create connection to the database
@@ -81,7 +75,6 @@ module.exports = function() {
       });
     },
 
-    // ############################################################
     // User requests
     userGetByFingerprintId: function(fingerprintId) {
       return new Promise(function(resolve, reject) {
@@ -102,9 +95,20 @@ module.exports = function() {
       });
     },
 
-    // ############################################################
-    // Message requests
+    userAdd: function(newItem) {
+      return new Promise(function(resolve, reject) {
+        Users.create(newItem, (error, item) => {
+          if (error) {
+            // Cannot add item
+            return reject(error.message);
+          }
+          //Added object will be returned
+          return resolve(item);
+        });
+      });
+    },
 
+    // Message requests
     messageGetAll: function() {
       return new Promise(function(resolve, reject) {
         // Fetch all documents
@@ -154,9 +158,7 @@ module.exports = function() {
       });
     },
 
-    // ############################################################
     // Word requests
-
     nounGetAll: function() {
       return new Promise(function(resolve, reject) {
         // Fetch all documents
