@@ -11,6 +11,7 @@ mongoose.set("useCreateIndex", true);
 // Data entities; the standard format is:
 const { nounSchema, verbSchema, adjSchema } = require("./msc-words.js");
 const messageSchema = require("./msc-message.js");
+const userSchema = require("./msc-user.js");
 
 // ################################################################################
 // Define the functions that can be called by server.js
@@ -18,6 +19,7 @@ const messageSchema = require("./msc-message.js");
 module.exports = function() {
   // Collection properties, which get their values upon connecting to the database
   let Messages;
+  let Users;
   let Nouns;
   let Verbs;
   let Adjs;
@@ -68,12 +70,34 @@ module.exports = function() {
         db.once("open", () => {
           console.log("Connection to the database was successful");
           Messages = db.model("messages", messageSchema, "messages");
+          Users = db.model("users", userSchema, "users");
           Nouns = db.model("nouns", nounSchema, "nouns");
           Verbs = db.model("verbs", verbSchema, "verbs");
           Adjs = db.model("adjs", adjSchema, "adjs");
           // Add others here...
 
           resolve();
+        });
+      });
+    },
+
+    // ############################################################
+    // User requests
+    userGetByFingerprintId: function(fingerprintId) {
+      return new Promise(function(resolve, reject) {
+        // Find one specific document
+        Users.findOne({ fingerprintId: fingerprintId }, (error, item) => {
+          if (error) {
+            // Find/match is not found
+            return reject(error.message);
+          }
+          // Check for an item
+          if (item) {
+            // Found, one object will be returned
+            return resolve(item);
+          } else {
+            return reject("Not found");
+          }
         });
       });
     },
