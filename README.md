@@ -11,10 +11,14 @@
 
 ### Collections
 
-- messages
-- nouns
-- verbs
-- adjs
+- messages: sender, text, time
+- nouns: word
+- verbs: word
+- adjs: word
+
+### Word database used
+
+- https://wordnet.princeton.edu/download/current-version
 
 ### Environment variables
 
