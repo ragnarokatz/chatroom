@@ -19,18 +19,18 @@ function setAndSendUsername(socket, username) {
   socket.emit("username", username);
 }
 
-module.exports.initializeSocket = function (http, manager) {
+module.exports.initializeSocket = function(http, manager) {
   m = manager;
 
   var io = require("socket.io")(http);
   // Socket IO setup
-  io.on("connection", function (socket) {
+  io.on("connection", function(socket) {
     console.log(`a user connected, assigned socket id ${socket.id}`);
 
     // Obtain fingerprint from client, get username if it is already
     // cached in database, else create new username and cache it
     // in database
-    socket.on("fingerprintId", function (fingerprintId) {
+    socket.on("fingerprintId", function(fingerprintId) {
       m.userGetByFingerprintId(fingerprintId)
         .then(obj => {
           console.log(`found user with fingerprint: ${fingerprintId}`);
@@ -62,14 +62,14 @@ module.exports.initializeSocket = function (http, manager) {
         });
     });
 
-    socket.on("disconnect", function () {
+    socket.on("disconnect", function() {
       console.log("user disconnected");
     });
 
     // On receiving message from client,
     // broadcast to everyone except self socket
     // TODO: this needs to be changed when rooms are added in later
-    socket.on("message", function (message) {
+    socket.on("message", function(message) {
       console.log("message: " + message);
 
       if (!socket.username) {
