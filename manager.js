@@ -131,6 +131,23 @@ module.exports = function() {
       });
     },
 
+    userDeleteInactive: function() {
+      return new Promise(function(resolve, reject) {
+        var cutoff = new Date();
+        cutoff.setMonth(cutoff.getMonth() - 1);
+        Users.find({ lastActiveTime: { $lt: cutoff } })
+          .remove()
+          .exec(error => {
+            if (error) {
+              // Cannot delete item
+              return reject(error.message);
+            }
+            // Return success, but don't leak info
+            return resolve();
+          });
+      });
+    },
+
     // Message requests
     messageGetAll: function() {
       return new Promise(function(resolve, reject) {
@@ -167,7 +184,7 @@ module.exports = function() {
     messageDeleteOld: function() {
       return new Promise(function(resolve, reject) {
         var cutoff = new Date();
-        cutoff.setYear(cutoff.getYear() - 1);
+        cutoff.setMonth(cutoff.getMonth() - 1);
         Messages.find({ time: { $lt: cutoff } })
           .remove()
           .exec(error => {

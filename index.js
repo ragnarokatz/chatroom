@@ -7,6 +7,7 @@ var app = express();
 var http = require("http").createServer(app);
 var { initializeSocket } = require("./socket.js");
 var { initializeUtils } = require("./utils.js");
+var { initializeCleaner } = require("./cleaner.js");
 
 // Data model and persistent store setup
 const manager = require("./manager.js");
@@ -38,6 +39,7 @@ m.connect()
         // Utils module setup
         initializeUtils(values[0], values[1], values[2]);
         initializeSocket(http, m);
+        initializeCleaner(m);
 
         http.listen(process.env.PORT, function() {
           console.log(

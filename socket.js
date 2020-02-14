@@ -73,6 +73,9 @@ module.exports.initializeSocket = function(http, manager) {
       console.log("message: " + message);
 
       if (!socket.username) {
+        console.log(
+          "Socket doesn't have a username, generating a temporary one"
+        );
         var username = generateUsername();
         setAndSendUsername(socket, username);
       }
