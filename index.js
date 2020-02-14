@@ -37,7 +37,7 @@ m.connect()
       .then(values => {
         // Utils module setup
         initializeUtils(values[0], values[1], values[2]);
-        initializeSocket(http);
+        initializeSocket(http, m);
 
         http.listen(process.env.PORT, function() {
           console.log(

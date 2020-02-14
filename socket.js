@@ -24,7 +24,7 @@ function generateAndSendUsername(socket) {
   sendUsername(socket, username);
 }
 
-module.exports.initializeSocket = function(http) {
+module.exports.initializeSocket = function(http, m) {
   var io = require("socket.io")(http);
   // Socket IO setup
   io.on("connection", function(socket) {
@@ -36,6 +36,8 @@ module.exports.initializeSocket = function(http) {
     socket.on("fingerprintId", function(fingerprintId) {
       m.userGetByFingerprintId(fingerprintId)
         .then(obj => {
+          console.log(`found user with fingerprint: ${fingeprintId}`);
+
           var username = obj.username;
           sendUsername(socket, username);
           sendMessageHistory(socket);
@@ -46,6 +48,8 @@ module.exports.initializeSocket = function(http) {
           });
         })
         .catch(err => {
+          console.log(`unable to find user with fingerprint: ${fingeprintId}`);
+
           generateAndSendUsername(socket);
           sendMessageHistory(socket);
 
