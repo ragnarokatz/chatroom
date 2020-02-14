@@ -1,8 +1,9 @@
 // socket.js
 var { generateUsername } = require("./utils.js");
+let m;
 
 // get message history from database and send it out to a socket
-function sendMessageHistory(socket) {
+function getAndSendMessageHistory(socket) {
   m.messageGetAll()
     .then(data => {
       socket.emit("history", data);
@@ -13,34 +14,30 @@ function sendMessageHistory(socket) {
 }
 
 // send username to a socket
-function sendUsername(socket, username) {
+function setAndSendUsername(socket, username) {
   socket.username = username;
   socket.emit("username", username);
 }
 
-// generate a random username and send it to a socket
-function generateAndSendUsername(socket) {
-  var username = generateUsername();
-  sendUsername(socket, username);
-}
+module.exports.initializeSocket = function (http, manager) {
+  m = manager;
 
-module.exports.initializeSocket = function(http, m) {
   var io = require("socket.io")(http);
   // Socket IO setup
-  io.on("connection", function(socket) {
+  io.on("connection", function (socket) {
     console.log(`a user connected, assigned socket id ${socket.id}`);
 
     // Obtain fingerprint from client, get username if it is already
     // cached in database, else create new username and cache it
     // in database
-    socket.on("fingerprintId", function(fingerprintId) {
+    socket.on("fingerprintId", function (fingerprintId) {
       m.userGetByFingerprintId(fingerprintId)
         .then(obj => {
-          console.log(`found user with fingerprint: ${fingeprintId}`);
+          console.log(`found user with fingerprint: ${fingerprintId}`);
 
           var username = obj.username;
-          sendUsername(socket, username);
-          sendMessageHistory(socket);
+          setAndSendUsername(socket, username);
+          getAndSendMessageHistory(socket);
 
           obj.lastActiveTime = new Date();
           m.userUpdate(obj).catch(err => {
@@ -48,10 +45,11 @@ module.exports.initializeSocket = function(http, m) {
           });
         })
         .catch(err => {
-          console.log(`unable to find user with fingerprint: ${fingeprintId}`);
+          console.log(`unable to find user with fingerprint: ${fingerprintId}`);
 
-          generateAndSendUsername(socket);
-          sendMessageHistory(socket);
+          var username = generateUsername();
+          setAndSendUsername(socket, username);
+          getAndSendMessageHistory(socket);
 
           var obj = {
             fingerprintId: fingerprintId,
@@ -64,18 +62,19 @@ module.exports.initializeSocket = function(http, m) {
         });
     });
 
-    socket.on("disconnect", function() {
+    socket.on("disconnect", function () {
       console.log("user disconnected");
     });
 
     // On receiving message from client,
     // broadcast to everyone except self socket
     // TODO: this needs to be changed when rooms are added in later
-    socket.on("message", function(message) {
+    socket.on("message", function (message) {
       console.log("message: " + message);
 
       if (!socket.username) {
-        generateAndSendUsername(socket);
+        var username = generateUsername();
+        setAndSendUsername(socket, username);
       }
 
       obj = { sender: socket.username, text: message, time: new Date() };
