@@ -136,7 +136,7 @@ module.exports = function() {
         var cutoff = new Date();
         cutoff.setMonth(cutoff.getMonth() - 1);
         Users.find({ lastActiveTime: { $lt: cutoff } })
-          .remove()
+          .deleteMany()
           .exec(error => {
             if (error) {
               // Cannot delete item
@@ -186,7 +186,7 @@ module.exports = function() {
         var cutoff = new Date();
         cutoff.setMonth(cutoff.getMonth() - 1);
         Messages.find({ time: { $lt: cutoff } })
-          .remove()
+          .deleteMany()
           .exec(error => {
             if (error) {
               // Cannot delete item
