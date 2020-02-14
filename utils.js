@@ -12,7 +12,7 @@ function capitalizeFirstLetter(word) {
   return word.charAt(0).toUpperCase() + word.substring(1);
 }
 
-module.exports.importWords = function(n, v, a) {
+module.exports.initializeUtils = function(n, v, a) {
   nouns = n.map(doc => {
     return capitalizeFirstLetter(doc.word);
   });

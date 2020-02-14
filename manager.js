@@ -108,6 +108,29 @@ module.exports = function() {
       });
     },
 
+    userUpdate: function(newItem) {
+      return new Promise(function(resolve, reject) {
+        Users.findByIdAndUpdate(
+          newItem._id,
+          newItem,
+          { new: true },
+          (error, item) => {
+            if (error) {
+              // Cannot edit item
+              return reject(error.message);
+            }
+            // Check for an item
+            if (item) {
+              // Edited object will be returned
+              return resolve(item);
+            } else {
+              return reject("Not found");
+            }
+          }
+        );
+      });
+    },
+
     // Message requests
     messageGetAll: function() {
       return new Promise(function(resolve, reject) {

@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 // Entity schema
 
 var userSchema = new Schema({
-  fingerprintId: String,
-  username: String,
-  lastActiveTime: Date
+  fingerprintId: { type: String, required: true },
+  username: { type: String, required: true },
+  lastActiveTime: { type: Date, required: true }
 });
 
 // Make schema available to the application
